@@ -29,7 +29,7 @@ export default function FeaturedNFTs({ nfts }: FeaturedNFTsProps) {
   };
 
   return (
-    <section className="py-20 px-6 relative bg-black">
+    <section className="py-20 px-6 relative bg-gradient-to-b from-neonBlue/20 via-lightBlue/20 to-neonPurple/10">
       <AnimatedText
         text="FEATURED NFTS"
         className="text-4xl md:text-5xl font-orbitron text-center mb-16 text-neonBlue"
