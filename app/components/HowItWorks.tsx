@@ -44,7 +44,7 @@ export default function HowItWorks({ steps }: HowItWorksProps) {
   };
 
   return (
-    <section className="py-20 px-6 bg-[linear-gradient(to_top,#0f172a,#16213e,#1a1a2e)]">
+    <section className="py-20 px-6 bg-[linear-gradient(to_right,#1a1a2e,#111,#0f172a)]">
       {/* Header */}
       <div className="text-center mb-16">
         <AnimatedText
@@ -78,7 +78,7 @@ export default function HowItWorks({ steps }: HowItWorksProps) {
           >
             {/* Step Number with Glow */}
             <motion.div
-              className="w-16 h-16 bg-neonBlue text-black rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-orbitron font-bold relative overflow-hidden"
+              className="w-16 h-16 bg-neonBlue text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-orbitron font-bold relative overflow-hidden"
               variants={numberVariants}
               initial="initial"
               animate="animate"
