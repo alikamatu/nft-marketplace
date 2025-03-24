@@ -21,9 +21,10 @@ export default function FeaturedNFTs({ nfts }: FeaturedNFTsProps) {
   const cardVariants = {
     hover: {
       scale: 1.1,
-      rotate: [0, 5, -5, 0],
-      boxShadow: "0px 15px 40px rgba(0, 240, 255, 0.6)",
-      transition: { duration: 0.5 },
+      rotateX: 10,
+      rotateY: 15,
+      boxShadow: "0px 20px 50px rgba(0, 240, 255, 0.7)",
+      transition: { duration: 0.4 },
     },
   };
 
@@ -38,7 +39,7 @@ export default function FeaturedNFTs({ nfts }: FeaturedNFTsProps) {
         {nfts.map((nft, index) => (
           <motion.div
             key={nft.id}
-            className="bg-gray-900 rounded-xl overflow-hidden cursor-pointer border border-neonBlue/30"
+            className="bg-gray-900 rounded-xl overflow-hidden cursor-pointer border border-neonBlue/30 relative"
             variants={cardVariants}
             whileHover="hover"
             initial={{ opacity: 0, y: 150 }}
@@ -51,19 +52,39 @@ export default function FeaturedNFTs({ nfts }: FeaturedNFTsProps) {
               src={nft.imageUrl}
               alt={nft.title}
               className="w-full h-64 object-cover"
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.1, rotate: 5 }}
             />
+            {/* Particle Burst on Hover */}
+            <motion.div
+              className="absolute inset-0 pointer-events-none"
+              whileHover={{ opacity: 1 }}
+              initial={{ opacity: 0 }}
+            >
+              {[...Array(5)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="w-2 h-2 bg-neonPurple rounded-full absolute"
+                  initial={{ x: "50%", y: "50%" }}
+                  whileHover={{
+                    x: Math.random() * 200 - 100,
+                    y: Math.random() * 200 - 100,
+                    opacity: [1, 0],
+                  }}
+                  transition={{ duration: 0.5 }}
+                />
+              ))}
+            </motion.div>
             <div className="p-6">
               <AnimatedText
                 text={nft.title}
                 className="text-2xl font-orbitron text-neonPurple"
-                type="fade"
+                type="spin"
                 delay={0.2}
               />
               <AnimatedText
                 text={`by ${nft.creator}`}
                 className="text-gray-400 font-poppins"
-                type="fade"
+                type="bounce"
                 delay={0.4}
               />
             </div>
