@@ -1,102 +1,191 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const router = useRouter();
+  const scrollRef = useRef(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  // Mock data for Featured NFTs
+  const featuredNFTs = [
+    {
+      id: 1,
+      title: "Neon Metropolis",
+      imageUrl: "https://via.placeholder.com/300x300.png?text=Neon+Metropolis",
+      creator: "AI_Visionary",
+    },
+    {
+      id: 2,
+      title: "Quantum Pulse",
+      imageUrl: "https://via.placeholder.com/300x300.png?text=Quantum+Pulse",
+      creator: "SynthMaster",
+    },
+    {
+      id: 3,
+      title: "Galactic Rift",
+      imageUrl: "https://via.placeholder.com/300x300.png?text=Galactic+Rift",
+      creator: "CosmoBot",
+    },
+  ];
+
+  // Text animation variants
+  const textVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.2, duration: 0.8, ease: "easeOut" },
+    }),
+  };
+
+  const cardVariants = {
+    hover: {
+      scale: 1.05,
+      rotate: 2,
+      boxShadow: "0px 10px 30px rgba(0, 240, 255, 0.5)",
+      transition: { duration: 0.3 },
+    },
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+      {/* Hero Section */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
+        className="relative h-screen flex items-center justify-center bg-gradient-to-br from-neonBlue via-neonPurple to-black"
+      >
+        <div className="absolute inset-0 bg-[url('/grid.png')] opacity-20 pointer-events-none" />
+        <div className="text-center z-10">
+          <motion.h1
+            className="text-5xl md:text-7xl font-orbitron font-bold tracking-wider"
+            initial="hidden"
+            animate="visible"
+            variants={textVariants}
+            custom={0}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            AI-POWERED
+          </motion.h1>
+          <motion.h1
+            className="text-5xl md:text-7xl font-orbitron font-bold tracking-wider text-neonBlue"
+            initial="hidden"
+            animate="visible"
+            variants={textVariants}
+            custom={1}
           >
-            Read our docs
-          </a>
+            NFT MARKETPLACE
+          </motion.h1>
+          <motion.p
+            className="text-lg md:text-2xl mt-4 max-w-xl mx-auto font-poppins"
+            initial="hidden"
+            animate="visible"
+            variants={textVariants}
+            custom={2}
+          >
+            Create, Mint, and Trade AI-Generated Art in a Decentralized Universe
+          </motion.p>
+          <Link href="/generate">
+            <motion.button
+              className="mt-8 px-8 py-4 bg-neonPurple text-white font-orbitron rounded-full border-2 border-neonBlue"
+              whileHover={{ scale: 1.1, boxShadow: "0px 0px 20px rgba(212, 0, 255, 0.8)" }}
+              whileTap={{ scale: 0.95 }}
+            >
+              START GENERATING
+            </motion.button>
+          </Link>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </motion.section>
+
+      {/* Featured NFTs Section */}
+      <section ref={scrollRef} className="py-20 px-6 relative">
+        <motion.h2
+          className="text-4xl md:text-5xl font-orbitron text-center mb-16 text-neonBlue"
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          FEATURED NFTS
+        </motion.h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+          {featuredNFTs.map((nft, index) => (
+            <motion.div
+              key={nft.id}
+              className="bg-gray-900 rounded-xl overflow-hidden cursor-pointer border border-neonBlue/30"
+              variants={cardVariants}
+              whileHover="hover"
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.2, duration: 0.6 }}
+              viewport={{ once: true }}
+              onClick={() => router.push(`/nft/${nft.id}`)}
+            >
+              <img
+                src={nft.imageUrl}
+                alt={nft.title}
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-2xl font-orbitron text-neonPurple">{nft.title}</h3>
+                <p className="text-gray-400 font-poppins">by {nft.creator}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        <div className="text-center mt-12">
+          <Link href="/marketplace">
+            <motion.button
+              className="px-6 py-3 bg-transparent text-neonBlue font-orbitron border border-neonBlue rounded-full"
+              whileHover={{ backgroundColor: "#00f0ff", color: "#000", scale: 1.1 }}
+            >
+              EXPLORE MORE
+            </motion.button>
+          </Link>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20 px-6 bg-gradient-to-t from-gray-900 to-black">
+        <motion.h2
+          className="text-4xl md:text-5xl font-orbitron text-center mb-16 text-neonPurple"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+          HOW IT WORKS
+        </motion.h2>
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+          {[
+            { step: "GENERATE", desc: "Input a prompt and watch AI craft your art." },
+            { step: "MINT", desc: "Turn your creation into a unique NFT on ICP." },
+            { step: "TRADE", desc: "Sell or auction your NFT in our marketplace." },
+          ].map((item, index) => (
+            <motion.div
+              key={index}
+              className="text-center"
+              initial={{ opacity: 0, x: index === 1 ? 0 : index === 0 ? -100 : 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.3, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="w-20 h-20 bg-neonBlue text-black rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-orbitron font-bold">
+                {index + 1}
+              </div>
+              <h3 className="text-2xl font-orbitron text-neonBlue mb-4">{item.step}</h3>
+              <p className="text-gray-300 font-poppins">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 bg-gray-900 text-center">
+        <p className="text-gray-400 font-poppins">© 2025 AI-Powered NFT Marketplace</p>
       </footer>
     </div>
   );
