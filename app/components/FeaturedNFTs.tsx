@@ -37,7 +37,7 @@ export default function FeaturedNFTs({ nfts }: FeaturedNFTsProps) {
   };
 
   return (
-    <section className="py-20 px-6 relative bg-[linear-gradient(to_right,#1a1a2e,#16213e,#0f172a)]">
+    <section className="py-20 px-6 relative bg-[linear-gradient(to_right,#1a1a2e,#111,#0f172a)]">
       {/* Header */}
       <div className="text-center mb-16">
         <AnimatedText
