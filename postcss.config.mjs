@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 const config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -7,9 +6,13 @@ const config = {
   theme: {
     extend: {
       colors: {
-        neonBlue: '#00f0ff',   // Bright cyan
-        neonPurple: '#d400ff', // Vivid purple
-        lightBlue: '#40c4ff',  // Softer blue for gradients
+        neonBlue: '#00f0ff',
+        neonPurple: '#d400ff',
+        lightBlue: '#40c4ff',
+        "common-rarity": "#cccccc", // Gray for Common
+        "rare-rarity": "#00ff99",   // Green for Rare
+        "epic-rarity": "#ff00cc",   // Pink for Epic
+        "legendary-rarity": "#ffd700", // Gold for Legendary
       },
       fontFamily: {
         orbitron: ['Orbitron', 'sans-serif'],
@@ -17,7 +20,7 @@ const config = {
       },
     },
   },
-  plugins: [],
+  plugins: ["@tailwindcss/postcss"],
 };
 
 export default config;

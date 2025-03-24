@@ -5,29 +5,12 @@ import { motion } from "framer-motion";
 import AnimatedText from "./AnimatedText";
 
 export default function Hero() {
-  const gradientVariants = {
-    animate: {
-      background: [
-        "linear-gradient(to bottom right, #00f0ff, #d400ff, #40c4ff)", // neonBlue → neonPurple → lightBlue
-        "linear-gradient(to bottom right, #40c4ff, #ff00cc, #00f0ff)", // lightBlue → neon pink → neonBlue
-        "linear-gradient(to bottom right, #00f0ff, #40c4ff, #d400ff)", // neonBlue → lightBlue → neonPurple
-      ],
-      transition: {
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-    },
-  };
-
   return (
     <motion.section
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1.5 }}
-      className="relative h-screen flex items-center justify-center overflow-hidden"
-      variants={gradientVariants}
-      animate="animate"
+      className="relative h-screen flex items-center justify-center bg-[linear-gradient(to_right,#1a1a2e,#111,#0f172a)] overflow-hidden"
     >
       {/* Animated Grid Background */}
       <motion.div
@@ -56,19 +39,21 @@ export default function Hero() {
           delay={0.6}
           type="spin"
         />
+        <br />
         <AnimatedText
           text="Create, Mint, Trade in a Decentralized Cosmos"
           className="text-lg md:text-2xl mt-6 max-w-xl mx-auto font-poppins text-lightBlue drop-shadow-md"
           delay={1}
           type="fade"
         />
+        <br />
         <Link href="/generate">
           <motion.button
             className="mt-10 px-10 py-4 bg-neonPurple text-white font-orbitron rounded-full border-2 border-lightBlue relative overflow-hidden"
             whileHover={{
               scale: 1.2,
               rotate: 5,
-              boxShadow: "0px 0px 30px rgba(64, 196, 255, 0.8)", // lightBlue glow
+              boxShadow: "0px 0px 30px rgba(64, 196, 255, 0.8)",
             }}
             whileTap={{ scale: 0.9 }}
             animate={{ scale: [1, 1.05, 1], transition: { duration: 1, repeat: Infinity } }}

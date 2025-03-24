@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@tailwind utilities;
 
 html {
   scroll-behavior: smooth;
@@ -25,11 +24,32 @@ html {
 }
 
 body {
-  font-family: var(--font-poppins);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-)
 }
 
 .grid-bg {
   background-image: linear-gradient(transparent 95%, rgba(0, 240, 255, 0.2) 95%),
     linear-gradient(90deg, transparent 95%, rgba(0, 240, 255, 0.2) 95%);
   background-size: 20px 20px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+/* Custom Gradient Animation */
+@keyframes gradientBG {
+  0% {
+    background: linear-gradient(to bottom right, #00f0ff, #d400ff, #40c4ff);
+  }
+  50% {
+    background: linear-gradient(to bottom right, #40c4ff, #ff00cc, #00f0ff);
+  }
+  100% {
+    background: linear-gradient(to bottom right, #00f0ff, #40c4ff, #d400ff);
+  }
+}
+
+.animate-gradient-bg {
+  animation: gradientBG 6s infinite ease-in-out;
 }
