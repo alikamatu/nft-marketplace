@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface AnimatedTextProps {
   text: string;
@@ -9,7 +9,6 @@ interface AnimatedTextProps {
   type?: "fade" | "pulse" | "spin" | "bounce";
 }
 
-// Define a type for the variant structure
 interface AnimationVariant {
   hidden: {
     opacity: number;
