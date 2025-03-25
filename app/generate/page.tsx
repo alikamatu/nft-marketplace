@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, Variants, Transition } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import AnimatedText from "../components/AnimatedText";
 import Image from "next/image";
 
@@ -149,6 +149,7 @@ export default function Generate() {
               alt="Generated Art"
               fill
               className="rounded-lg border-4 border-neonPurple object-cover"
+              unoptimized // For placeholder.com images
             />
           </div>
           <motion.div
