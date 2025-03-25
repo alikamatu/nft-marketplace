@@ -1,7 +1,6 @@
-"use client"
+"use client";
 
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
 
 interface AnimatedTextProps {
   text: string;
