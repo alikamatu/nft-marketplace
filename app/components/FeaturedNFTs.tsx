@@ -1,8 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import AnimatedText from "./AnimatedText";
+import { useRouter } from "next/navigation";
 
 interface NFT {
   id: number;
@@ -22,7 +22,7 @@ interface FeaturedNFTsProps {
 export default function FeaturedNFTs({ nfts }: FeaturedNFTsProps) {
   const router = useRouter();
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     initial: { opacity: 0, y: 100 },
     visible: (index: number) => ({
       opacity: 1,
@@ -31,36 +31,32 @@ export default function FeaturedNFTs({ nfts }: FeaturedNFTsProps) {
     }),
     hover: {
       scale: 1.05,
-      boxShadow: "0px 15px 40px rgba(0, 240, 255, 0.5)",
+      boxShadow: "0px 15px 40px rgba(0, 240, 255, 0.5), 0px 0px 60px rgba(212, 0, 255, 0.4)",
       transition: { duration: 0.3 },
     },
   };
 
   return (
-    <section className="py-20 px-6 relative bg-[linear-gradient(to_right,#1a1a2e,#111,#0f172a)]">
-      {/* Header */}
-      <div className="text-center mb-16">
-        <AnimatedText
-          text="FEATURED NFTS"
-          className="text-4xl md:text-6xl font-orbitron text-neonBlue mb-4"
-        />
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          viewport={{ once: true }}
-          className="text-lg md:text-xl font-poppins text-lightBlue max-w-2xl mx-auto"
-        >
-          Discover the latest AI-generated masterpieces minted on the Internet Computer Protocol (ICP). Hover over each NFT to explore its story, rarity, and value.
-        </motion.p>
+    <section className="py-20 px-6 relative bg-[linear-gradient(45deg,#1a2a44,#0a0a1a,#1a2a44_90%)] overflow-hidden">
+      {/* Holographic Overlay */}
+      <motion.div
+        className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,240,255,0.1)_0%,transparent_70%)] opacity-20"
+        animate={{ scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div className="flex w-full items-center justify-center mb-16">
+      <AnimatedText
+        text="FEATURED NFTS"
+        className="text-4xl md:text-6xl font-orbitron text-neonBlue mb-16 text-center drop-shadow-[0_0_20px_rgba(0,240,255,0.9)] glitch-border"
+        type="pulse"
+      />
       </div>
 
-      {/* NFT Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
         {nfts.map((nft, index) => (
           <motion.div
             key={nft.id}
-            className="relative bg-gray-900 rounded-xl overflow-hidden cursor-pointer border border-neonBlue/50 group"
+            className="relative bg-gray-900/80 backdrop-blur-md rounded-xl overflow-hidden cursor-pointer border-2 border-neonBlue/30 group glitch-border"
             variants={cardVariants}
             initial="initial"
             whileInView="visible"
@@ -69,7 +65,6 @@ export default function FeaturedNFTs({ nfts }: FeaturedNFTsProps) {
             viewport={{ once: true }}
             onClick={() => router.push(`/nft/${nft.id}`)}
           >
-            {/* Image */}
             <motion.img
               src={nft.imageUrl}
               alt={nft.title}
@@ -77,70 +72,32 @@ export default function FeaturedNFTs({ nfts }: FeaturedNFTsProps) {
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.3 }}
             />
-
-            {/* Base Info */}
+            {/* Holographic Glow */}
+            <motion.div
+              className="absolute inset-0 pointer-events-none bg-gradient-to-t from-neonBlue/20 to-transparent opacity-0 group-hover:opacity-50"
+              transition={{ duration: 0.3 }}
+            />
             <div className="p-6">
               <AnimatedText
                 text={nft.title}
-                className="text-2xl font-orbitron text-neonPurple"
+                className="text-2xl font-orbitron text-neonPurple drop-shadow-[0_0_10px_rgba(212,0,255,0.8)]"
                 type="spin"
                 delay={0.2}
               />
               <AnimatedText
                 text={`by ${nft.creator}`}
-                className="text-gray-300 font-poppins"
+                className="text-gray-400 font-poppins glitch-border-subtle"
                 type="bounce"
                 delay={0.4}
               />
-              <div className="mt-2 flex justify-between text-sm font-poppins text-lightBlue">
+              <div className="mt-2 flex justify-between text-sm font-poppins text-gray-300">
                 <span>{nft.price}</span>
-                <span className={`text-${nft.rarity.toLowerCase()}-rarity`}>
-                  {nft.rarity}
-                </span>
+                <span className={`text-${nft.rarity.toLowerCase()}-rarity`}>{nft.rarity}</span>
               </div>
-            </div>
-
-            {/* Hover Overlay (CSS-based) */}
-            <div className="absolute inset-0 bg-gray-900/90 p-6 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <AnimatedText
-                text={nft.title}
-                className="text-xl font-orbitron text-neonBlue"
-                type="fade"
-                delay={0}
-              />
-              <p className="text-gray-300 font-poppins mt-2">{nft.description}</p>
-              <div className="mt-4 text-sm text-lightBlue">
-                <p>Created: {nft.createdAt}</p>
-                <p>Price: {nft.price}</p>
-                <p>Rarity: {nft.rarity}</p>
-              </div>
-              <motion.button
-                className="mt-4 px-6 py-2 bg-neonPurple text-white font-orbitron rounded-full"
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.3 }}
-              >
-                View Details
-              </motion.button>
             </div>
           </motion.div>
         ))}
       </div>
-
-      {/* CTA */}
-      <motion.div
-        className="text-center mt-12"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        viewport={{ once: true }}
-      >
-        <button
-          onClick={() => router.push("/marketplace")}
-          className="px-8 py-3 bg-transparent text-neonBlue font-orbitron border-2 border-neonBlue rounded-full hover:bg-neonBlue hover:text-black transition-all"
-        >
-          Explore the Full Marketplace
-        </button>
-      </motion.div>
     </section>
   );
 }

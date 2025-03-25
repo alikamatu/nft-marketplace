@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import AnimatedText from "./AnimatedText";
 
 interface Step {
@@ -13,62 +13,52 @@ interface HowItWorksProps {
 }
 
 export default function HowItWorks({ steps }: HowItWorksProps) {
-  // Card animation variants
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
     visible: (index: number) => ({
       opacity: 1,
       y: 0,
-      scale: 1,
       transition: { delay: index * 0.3, duration: 0.6, ease: "easeOut" },
     }),
     hover: {
-      scale: 1.03,
-      boxShadow: "0px 10px 30px rgba(0, 240, 255, 0.3)",
-      transition: { duration: 0.3 },
+      scale: 1.05,
+      boxShadow: "0px 10px 30px rgba(0, 240, 255, 0.5), 0px 0px 50px rgba(212, 0, 255, 0.4)",
     },
   };
 
-  // Number glow animation
-  const numberVariants = {
+  const numberVariants: Variants = {
     initial: { scale: 1 },
     animate: {
       scale: [1, 1.1, 1],
       boxShadow: [
-        "0px 0px 10px rgba(0, 240, 255, 0.5)",
-        "0px 0px 20px rgba(0, 240, 255, 0.8)",
-        "0px 0px 10px rgba(0, 240, 255, 0.5)",
+        "0px 0px 15px rgba(0, 240, 255, 0.6)",
+        "0px 0px 25px rgba(0, 240, 255, 0.9)",
+        "0px 0px 15px rgba(0, 240, 255, 0.6)",
       ],
       transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
     },
   };
 
   return (
-    <section className="py-20 px-6 bg-[linear-gradient(to_right,#1a1a2e,#111,#0f172a)]">
-      {/* Header */}
-      <div className="text-center mb-16">
-        <AnimatedText
-          text="HOW IT WORKS"
-          className="text-4xl md:text-5xl font-orbitron text-neonPurple mb-4"
-          type="fade"
-        />
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-lg font-poppins text-gray-400 max-w-2xl mx-auto"
-        >
-          Follow these simple steps to create, mint, and trade your AI-generated NFTs on our decentralized platform.
-        </motion.p>
+    <section className="py-20 px-6 bg-[linear-gradient(to_top,#1a2a44,#0a0a1a,#1a2a44)] relative overflow-hidden">
+      {/* Holographic Overlay */}
+      <motion.div
+        className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,240,255,0.1)_0%,transparent_70%)] opacity-20"
+        animate={{ scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div className="flex w-full justify-center items-center mb-16">
+      <AnimatedText
+        text="HOW IT WORKS"
+        className="text-4xl md:text-5xl font-orbitron text-neonPurple mb-16 text-center drop-shadow-[0_0_20px_rgba(212,0,255,0.9)] glitch-border"
+        type="pulse"
+      />
       </div>
-
-      {/* Steps Grid */}
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
         {steps.map((item, index) => (
           <motion.div
             key={index}
-            className="relative bg-gray-800 rounded-lg p-6 text-center border border-neonBlue/20 hover:border-neonBlue/50 transition-colors duration-300"
+            className="relative bg-gray-900/80 backdrop-blur-md rounded-lg p-6 text-center border-2 border-neonBlue/30 glitch-border group"
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
@@ -76,9 +66,8 @@ export default function HowItWorks({ steps }: HowItWorksProps) {
             custom={index}
             viewport={{ once: true }}
           >
-            {/* Step Number with Glow */}
             <motion.div
-              className="w-16 h-16 bg-neonBlue text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-orbitron font-bold relative overflow-hidden"
+              className="w-16 h-16 bg-neonBlue text-black rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-orbitron font-bold relative overflow-hidden"
               variants={numberVariants}
               initial="initial"
               animate="animate"
@@ -90,54 +79,23 @@ export default function HowItWorks({ steps }: HowItWorksProps) {
                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
               />
             </motion.div>
-
-            {/* Step Title */}
             <AnimatedText
               text={item.step}
-              className="text-2xl font-orbitron text-neonBlue mb-4"
+              className="text-2xl font-orbitron text-neonBlue drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]"
               type="fade"
               delay={index * 0.2}
             />
-
-            {/* Step Description */}
             <motion.p
+              className="text-gray-400 font-poppins text-sm md:text-base glitch-border-subtle"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: index * 0.4, duration: 0.6 }}
-              className="text-gray-300 font-poppins text-sm md:text-base"
             >
               {item.desc}
             </motion.p>
-
-            {/* Connecting Line (visible on medium screens and up) */}
-            {index < steps.length - 1 && (
-              <motion.div
-                className="hidden md:block absolute top-1/2 right-0 w-1/2 h-1 bg-neonBlue/50"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                transition={{ delay: index * 0.5, duration: 1 }}
-                style={{ transformOrigin: "left" }}
-              />
-            )}
           </motion.div>
         ))}
       </div>
-
-      {/* CTA */}
-      <motion.div
-        className="text-center mt-16"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-        viewport={{ once: true }}
-      >
-        <button
-          className="px-8 py-3 bg-neonPurple text-white font-orbitron rounded-full border-2 border-neonBlue/50 hover:bg-neonBlue hover:text-black hover:border-neonBlue transition-all duration-300"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          Get Started Now
-        </button>
-      </motion.div>
     </section>
   );
 }

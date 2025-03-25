@@ -3,7 +3,6 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
 
-// Define the NFT type with specific rarity values
 type NFT = {
   id: number;
   title: string;
@@ -15,7 +14,6 @@ type NFT = {
   description: string;
 };
 
-// Define the Step type for HowItWorks component
 type Step = {
   step: string;
   desc: string;
