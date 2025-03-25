@@ -3,8 +3,26 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
 
+// Define the NFT type with specific rarity values
+type NFT = {
+  id: number;
+  title: string;
+  imageUrl: string;
+  creator: string;
+  price: string;
+  createdAt: string;
+  rarity: "Common" | "Rare" | "Epic" | "Legendary";
+  description: string;
+};
+
+// Define the Step type for HowItWorks component
+type Step = {
+  step: string;
+  desc: string;
+};
+
 export default function Home() {
-    const featuredNFTs = [
+    const featuredNFTs: NFT[] = [
       {
         id: 1,
         title: "Neon Metropolis",
@@ -37,7 +55,7 @@ export default function Home() {
       },
     ];
   
-    const steps = [
+    const steps: Step[] = [
       { step: "GENERATE", desc: "Input a prompt and watch AI craft your art." },
       { step: "MINT", desc: "Turn your creation into a unique NFT on ICP." },
       { step: "TRADE", desc: "Sell or auction your NFT in our marketplace." },
