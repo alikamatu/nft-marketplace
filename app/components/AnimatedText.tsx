@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 interface AnimatedTextProps {
   text: string;
@@ -9,29 +9,50 @@ interface AnimatedTextProps {
   type?: "fade" | "pulse" | "spin" | "bounce";
 }
 
-interface AnimationVariant {
-  hidden: {
-    opacity: number;
-    y?: number;
-    scale?: number;
-    rotate?: number;
-  };
-  visible: {
-    opacity: number;
-    y?: number;
-    scale?: number;
-    rotate?: number;
-    transition: {
-      delay: number;
-      duration: number;
-      ease?: string;
-      repeat?: number;
-      repeatType?: "reverse" | "loop" | "mirror";
-      type?: "spring";
-      bounce?: number;
-    };
-  };
-}
+const variants: Record<string, Variants> = {
+  fade: {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { delay: 0, duration: 0.8, ease: "easeOut" },
+    },
+  },
+  pulse: {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { 
+        delay: 0, 
+        duration: 0.6, 
+        repeat: Infinity, 
+        repeatType: "reverse" 
+      },
+    },
+  },
+  spin: {
+    hidden: { opacity: 0, rotate: -180 },
+    visible: {
+      opacity: 1,
+      rotate: 0,
+      transition: { delay: 0, duration: 1 },
+    },
+  },
+  bounce: {
+    hidden: { opacity: 0, y: -50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { 
+        delay: 0, 
+        duration: 0.5, 
+        type: "spring", 
+        bounce: 0.5 
+      },
+    },
+  },
+};
 
 export default function AnimatedText({
   text,
@@ -39,47 +60,18 @@ export default function AnimatedText({
   delay = 0,
   type = "fade",
 }: AnimatedTextProps) {
-  const variants: Record<string, AnimationVariant> = {
-    fade: {
-      hidden: { opacity: 0, y: 30 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: { delay, duration: 0.8, ease: "easeOut" },
-      },
-    },
-    pulse: {
-      hidden: { opacity: 0, scale: 0.8 },
-      visible: {
-        opacity: 1,
-        scale: 1,
-        transition: { delay, duration: 0.6, repeat: Infinity, repeatType: "reverse" },
-      },
-    },
-    spin: {
-      hidden: { opacity: 0, rotate: -180 },
-      visible: {
-        opacity: 1,
-        rotate: 0,
-        transition: { delay, duration: 1 },
-      },
-    },
-    bounce: {
-      hidden: { opacity: 0, y: -50 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: { delay, duration: 0.5, type: "spring", bounce: 0.5 },
-      },
-    },
-  };
+  // Apply the delay to each variant
+  const delayedVariants = JSON.parse(JSON.stringify(variants[type]));
+  if (delayedVariants.visible.transition) {
+    delayedVariants.visible.transition.delay = delay;
+  }
 
   return (
     <motion.span
       className={className}
       initial="hidden"
       animate="visible"
-      variants={variants[type]}
+      variants={delayedVariants}
     >
       {text.split("").map((char, index) => (
         <motion.span
