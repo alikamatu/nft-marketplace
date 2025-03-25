@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 interface AnimatedTextProps {
   text: string;
@@ -15,10 +15,15 @@ export default function AnimatedText({
   delay = 0,
   type = "fade",
 }: AnimatedTextProps) {
-  const variants = {
+  // Explicitly type variants as Variants
+  const variants: Variants = {
     fade: {
       hidden: { opacity: 0, y: 30 },
-      visible: { opacity: 1, y: 0, transition: { delay, duration: 0.8, ease: "easeOut" } },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: { delay, duration: 0.8, ease: "easeOut" },
+      },
     },
     pulse: {
       hidden: { opacity: 0, scale: 0.8 },
@@ -30,7 +35,11 @@ export default function AnimatedText({
     },
     spin: {
       hidden: { opacity: 0, rotate: -180 },
-      visible: { opacity: 1, rotate: 0, transition: { delay, duration: 1 } },
+      visible: {
+        opacity: 1,
+        rotate: 0,
+        transition: { delay, duration: 1 },
+      },
     },
     bounce: {
       hidden: { opacity: 0, y: -50 },
