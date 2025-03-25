@@ -1,5 +1,3 @@
-"use client"
-
 import { motion, Variants } from "framer-motion";
 
 interface AnimatedTextProps {
@@ -9,14 +7,38 @@ interface AnimatedTextProps {
   type?: "fade" | "pulse" | "spin" | "bounce";
 }
 
+// Define a type for the variant structure
+interface AnimationVariant {
+  hidden: {
+    opacity: number;
+    y?: number;
+    scale?: number;
+    rotate?: number;
+  };
+  visible: {
+    opacity: number;
+    y?: number;
+    scale?: number;
+    rotate?: number;
+    transition: {
+      delay: number;
+      duration: number;
+      ease?: string;
+      repeat?: number;
+      repeatType?: "reverse" | "loop" | "mirror";
+      type?: "spring";
+      bounce?: number;
+    };
+  };
+}
+
 export default function AnimatedText({
   text,
   className = "",
   delay = 0,
   type = "fade",
 }: AnimatedTextProps) {
-  // Explicitly type variants as Variants
-  const variants: Variants = {
+  const variants: Record<string, AnimationVariant> = {
     fade: {
       hidden: { opacity: 0, y: 30 },
       visible: {
