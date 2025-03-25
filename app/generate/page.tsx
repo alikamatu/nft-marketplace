@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants, Transition } from "framer-motion";
 import AnimatedText from "../components/AnimatedText";
+import Image from "next/image";
 
 export default function Generate() {
   const [prompt, setPrompt] = useState("");
@@ -10,7 +11,7 @@ export default function Generate() {
   const [loading, setLoading] = useState(false);
 
   // Glitch effect for text
-  const glitchVariants = {
+  const glitchVariants: Variants = {
     hidden: { opacity: 0, x: -20 },
     visible: {
       opacity: 1,
@@ -18,7 +19,7 @@ export default function Generate() {
       transition: {
         duration: 0.5,
         repeat: 3,
-        repeatType: "mirror",
+        repeatType: "mirror" as const,
         ease: "easeInOut",
       },
     },
@@ -38,7 +39,7 @@ export default function Generate() {
   };
 
   // Image reveal with explosion effect
-  const imageVariants = {
+  const imageVariants: Variants = {
     hidden: { opacity: 0, scale: 0, rotate: 180 },
     visible: {
       opacity: 1,
@@ -67,6 +68,9 @@ export default function Generate() {
       {/* Animated Background */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-neonBlue to-neonPurple opacity-30"
+        animate={{
+          backgroundPosition: ["0% 0%", "100% 100%"],
+        }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
 
@@ -102,7 +106,7 @@ export default function Generate() {
         <motion.div
           className="absolute inset-0 rounded-lg pointer-events-none"
           animate={{ boxShadow: "0px 0px 20px rgba(0, 240, 255, 0.5)" }}
-          transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
+          transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" as const }}
         />
       </motion.div>
 
@@ -139,11 +143,14 @@ export default function Generate() {
           initial="hidden"
           animate="visible"
         >
-          <img
-            src={imageUrl}
-            alt="Generated Art"
-            className="w-full h-auto rounded-lg border-4 border-neonPurple"
-          />
+          <div className="relative w-full h-96">
+            <Image
+              src={imageUrl}
+              alt="Generated Art"
+              fill
+              className="rounded-lg border-4 border-neonPurple object-cover"
+            />
+          </div>
           <motion.div
             className="absolute inset-0 rounded-lg pointer-events-none"
             animate={{ opacity: [0, 0.5, 0], scale: [1, 1.2, 1] }}
